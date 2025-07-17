@@ -25,4 +25,8 @@ public class SiteService {
         .map(SiteModel:: getUrlOriginal)
         .orElse(null);
     }
+    public SiteModel createUrl(String urlOriginal){
+        SiteModel site = new SiteModel(urlOriginal);
+        return repositorie.save(site);
+    }
 }
