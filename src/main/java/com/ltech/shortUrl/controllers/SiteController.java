@@ -6,6 +6,9 @@ import org.springframework.web.bind.annotation.RestController;
 import com.ltech.shortUrl.models.SiteModel;
 import com.ltech.shortUrl.services.SiteService;
 
+import jakarta.servlet.http.HttpServletResponse;
+
+import java.io.IOException;
 import java.util.List;
 
 import org.springframework.http.ResponseEntity;
@@ -33,18 +36,19 @@ public class SiteController {
     }
 
     @PostMapping("/create")
-    public ResponseEntity<SiteModel> createUrl(@RequestBody String urlOriginal) {
-        SiteModel createdSite = siteService.createUrl(urlOriginal);
+    public ResponseEntity<SiteModel> createUrl(@RequestBody SiteModel urlOriginal) {
+        SiteModel createdSite = siteService.createUrl(urlOriginal.getUrlOriginal());
         return ResponseEntity.ok(createdSite);
     }
     
     @GetMapping("/getOriginalUrl")
-    public ResponseEntity<String> getUrlOriginal(@RequestParam String shortUrl) {
+    public void getUrlOriginal(@RequestParam String shortUrl, HttpServletResponse response) throws IOException {
         String originalUrl = siteService.getUrlOriginal(shortUrl);
+        System.out.println("Original URL: " + originalUrl);
         if (originalUrl != null) {
-            return ResponseEntity.ok(originalUrl);
+            response.sendRedirect(originalUrl); // redireciona de verdade
         } else {
-            return ResponseEntity.notFound().build();
+            response.sendError(HttpServletResponse.SC_NOT_FOUND, "URL encurtada não encontrada");
         }
     }
     

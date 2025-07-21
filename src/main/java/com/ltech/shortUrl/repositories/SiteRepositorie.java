@@ -9,5 +9,5 @@ import com.ltech.shortUrl.models.SiteModel;
 
 @Repository
 public interface SiteRepositorie extends JpaRepository<SiteModel, Long>{
-    Optional<SiteModel> findByUrlOriginal(String urlEncurtada);
+    Optional<SiteModel> findByUrlEncurtada(String urlEncurtada);
 }

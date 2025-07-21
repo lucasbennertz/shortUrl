@@ -21,7 +21,7 @@ public class SiteService {
         return this.repositorie.findAll();
     }
     public String getUrlOriginal(String shortUrl){
-        return repositorie.findByUrlOriginal(shortUrl)
+        return repositorie.findByUrlEncurtada(shortUrl)
         .map(SiteModel:: getUrlOriginal)
         .orElse(null);
     }

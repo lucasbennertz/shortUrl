@@ -36,7 +36,7 @@ public class SiteModel {
     private String urlOriginal;
     @Column(name = "url_encurtada", nullable = false, unique = true)
     private String urlEncurtada;
-    @Column(name = "qr_code_base64", nullable = false)
+    @Column(name = "qr_code_base64", nullable = false, columnDefinition = "TEXT")
     private String qrCodeBase64;
 
     public SiteModel(String urlOriginal){
