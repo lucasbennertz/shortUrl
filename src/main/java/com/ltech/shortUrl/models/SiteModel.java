@@ -15,6 +15,7 @@ import com.google.zxing.common.BitMatrix;
 import com.google.zxing.qrcode.QRCodeWriter;
 import com.google.zxing.qrcode.decoder.ErrorCorrectionLevel;
 
+import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -26,14 +27,17 @@ import lombok.Setter;
 @Entity
 @Getter
 @Setter
-@Table(name = "Site")
+@Table(name = "site")
 public class SiteModel {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     Long ID;
-    String urlOriginal;
-    String urlEncurtada;
-    String qrCodeBase64;
+    @Column(name = "url_original", nullable = false)
+    private String urlOriginal;
+    @Column(name = "url_encurtada", nullable = false, unique = true)
+    private String urlEncurtada;
+    @Column(name = "qr_code_base64", nullable = false)
+    private String qrCodeBase64;
 
     public SiteModel(String urlOriginal){
         this.urlOriginal = urlOriginal;

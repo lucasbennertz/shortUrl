@@ -27,6 +27,10 @@ public class SiteService {
     }
     public SiteModel createUrl(String urlOriginal){
         SiteModel site = new SiteModel(urlOriginal);
+        System.out.println(site.getUrlOriginal());
+        System.out.println(site.getQrCodeBase64());
+        System.out.println(site.getUrlEncurtada());
+
         return repositorie.save(site);
     }
 }
