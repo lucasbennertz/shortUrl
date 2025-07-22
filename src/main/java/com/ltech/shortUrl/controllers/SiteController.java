@@ -44,7 +44,6 @@ public class SiteController {
     @GetMapping("/getOriginalUrl")
     public void getUrlOriginal(@RequestParam String shortUrl, HttpServletResponse response) throws IOException {
         String originalUrl = siteService.getUrlOriginal(shortUrl);
-        System.out.println("Original URL: " + originalUrl);
         if (originalUrl != null) {
             response.sendRedirect(originalUrl); // redireciona de verdade
         } else {
