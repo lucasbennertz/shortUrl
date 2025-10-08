@@ -40,6 +40,17 @@ public class SiteController {
         SiteModel createdSite = siteService.createUrl(urlOriginal.getUrlOriginal());
         return ResponseEntity.ok(createdSite);
     }
+    @GetMapping("/getDados")
+    public ResponseEntity<SiteModel> getDados(@RequestParam String shortUrl) {
+        String originalUrl = siteService.getUrlOriginal(shortUrl);
+        if (originalUrl != null) {
+            SiteModel site = new SiteModel(originalUrl);
+            site.setUrlEncurtada(shortUrl);
+            return ResponseEntity.ok(site);
+        } else {
+            return ResponseEntity.notFound().build();
+        }
+    }
     
     @GetMapping("/getOriginalUrl")
     public void getUrlOriginal(@RequestParam String shortUrl, HttpServletResponse response) throws IOException {
