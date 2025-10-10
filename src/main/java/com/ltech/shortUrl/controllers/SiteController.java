@@ -1,7 +1,6 @@
 package com.ltech.shortUrl.controllers;
 
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import com.ltech.shortUrl.models.SiteModel;
 import com.ltech.shortUrl.services.SiteService;
@@ -12,12 +11,6 @@ import java.io.IOException;
 import java.util.List;
 
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestParam;
-
-
 
 
 @RestController
@@ -40,8 +33,8 @@ public class SiteController {
         SiteModel createdSite = siteService.createUrl(urlOriginal.getUrlOriginal());
         return ResponseEntity.ok(createdSite);
     }
-    @GetMapping("/getDados")
-    public ResponseEntity<SiteModel> getDados(@RequestParam String shortUrl) {
+    @GetMapping("/getDados/{shortUrl}")
+    public ResponseEntity<SiteModel> getDados(@PathVariable String shortUrl) {
         String originalUrl = siteService.getUrlOriginal(shortUrl);
         if (originalUrl != null) {
             SiteModel site = new SiteModel(originalUrl);
@@ -52,14 +45,19 @@ public class SiteController {
         }
     }
     
-    @GetMapping("/getOriginalUrl")
-    public void getUrlOriginal(@RequestParam String shortUrl, HttpServletResponse response) throws IOException {
+    @GetMapping("/{shortUrl}")
+    public void getUrlOriginal(@PathVariable String shortUrl, HttpServletResponse response) throws IOException {
         String originalUrl = siteService.getUrlOriginal(shortUrl);
         if (originalUrl != null) {
             response.sendRedirect(originalUrl); // redireciona de verdade
         } else {
             response.sendError(HttpServletResponse.SC_NOT_FOUND, "URL encurtada não encontrada");
         }
+    }
+    @DeleteMapping("/delete/{id}")
+    public ResponseEntity<Void> deleteById(@PathVariable Long id) {
+        siteService.deleteById(id);
+        return ResponseEntity.noContent().build();
     }
     
 }
