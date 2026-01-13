@@ -1,0 +1,37 @@
+version: '3.8'
+
+services:
+  db:
+    image: postgres:latest # Imagem oficial do PostgreSQL
+    restart: on-failure
+    environment:
+      POSTGRES_DB: shorturl
+      POSTGRES_USER: user
+      POSTGRES_PASSWORD: senha
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    ports:
+      - "5432:5432" # Porta do banco de dados
+    networks:
+      - pgadmin_net
+
+  pgadmin:
+    image: dpage/pgadmin4 # Imagem oficial do pgAdmin
+    restart: always
+    environment:
+      PGADMIN_DEFAULT_EMAIL: admin@admin.com
+      PGADMIN_DEFAULT_PASSWORD: admin
+    ports:
+      - "8081:80" # Acessa o pgAdmin na porta 8080 local
+    depends_on:
+      - db # Garante que o banco de dados inicie antes do pgAdmin
+    volumes:
+      - pgadmin_data:/var/lib/pgadmin
+    networks:
+      pgadmin_net:
+volumes:
+  postgres_data:
+  pgadmin_data:
+
+networks:
+  pgadmin_net:
