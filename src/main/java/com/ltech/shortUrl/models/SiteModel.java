@@ -14,6 +14,7 @@ import com.google.zxing.WriterException;
 import com.google.zxing.common.BitMatrix;
 import com.google.zxing.qrcode.QRCodeWriter;
 import com.google.zxing.qrcode.decoder.ErrorCorrectionLevel;
+import com.ltech.shortUrl.Dto.SiteDTO;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -72,24 +73,27 @@ public class SiteModel {
         return byteMatrix;
 	}
     private String bitMatrixToBase64(BitMatrix matrix) {
-    try {
-        int width = matrix.getWidth();
-        int height = matrix.getHeight();
-        BufferedImage image = new BufferedImage(width, height, BufferedImage.TYPE_INT_RGB);
-        for (int x = 0; x < width; x++) {
-            for (int y = 0; y < height; y++) {
-                image.setRGB(x, y, matrix.get(x, y) ? 0x000000 : 0xFFFFFF);
+        try {
+            int width = matrix.getWidth();
+            int height = matrix.getHeight();
+            BufferedImage image = new BufferedImage(width, height, BufferedImage.TYPE_INT_RGB);
+            for (int x = 0; x < width; x++) {
+                for (int y = 0; y < height; y++) {
+                    image.setRGB(x, y, matrix.get(x, y) ? 0x000000 : 0xFFFFFF);
+                }
             }
+
+            ByteArrayOutputStream baos = new ByteArrayOutputStream();
+            ImageIO.write(image, "png", baos);
+            return Base64.getEncoder().encodeToString(baos.toByteArray());
+        } catch (Exception e) {
+            e.printStackTrace();
+            return null;
         }
-
-        ByteArrayOutputStream baos = new ByteArrayOutputStream();
-        ImageIO.write(image, "png", baos);
-        return Base64.getEncoder().encodeToString(baos.toByteArray());
-    } catch (Exception e) {
-        e.printStackTrace();
-        return null;
     }
-}
-
+    public SiteModel siteDtoToModel(SiteDTO siteDTO){
+        SiteModel siteModel = new SiteModel(siteDTO.getUrlOriginal());
+        return siteModel;
+    }
 }
 

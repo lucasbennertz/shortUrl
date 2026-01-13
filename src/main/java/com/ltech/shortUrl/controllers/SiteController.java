@@ -2,6 +2,7 @@ package com.ltech.shortUrl.controllers;
 
 import org.springframework.web.bind.annotation.*;
 
+import com.ltech.shortUrl.Dto.SiteDTO;
 import com.ltech.shortUrl.models.SiteModel;
 import com.ltech.shortUrl.services.SiteService;
 
@@ -29,8 +30,8 @@ public class SiteController {
     }
 
     @PostMapping("/create")
-    public ResponseEntity<SiteModel> createUrl(@RequestBody SiteModel urlOriginal) {
-        SiteModel createdSite = siteService.createUrl(urlOriginal.getUrlOriginal());
+    public ResponseEntity<SiteModel> createUrl(@RequestBody SiteDTO siteDto) {
+        SiteModel createdSite = siteService.createUrl(siteDto.getUrlOriginal());
         return ResponseEntity.ok(createdSite);
     }
     @GetMapping("/getDados/{shortUrl}")
