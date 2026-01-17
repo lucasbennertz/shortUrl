@@ -32,7 +32,7 @@ public class SiteController {
     @PostMapping("/create")
     public ResponseEntity<SiteModel> createUrl(@RequestBody SiteDTO siteDto) {
         SiteModel createdSite = siteService.createUrl(siteDto.getUrlOriginal());
-        return ResponseEntity.ok(createdSite);
+        return ResponseEntity.ok(createdSite).;
     }
     @GetMapping("/getDados/{shortUrl}")
     public ResponseEntity<SiteModel> getDados(@PathVariable String shortUrl) {
