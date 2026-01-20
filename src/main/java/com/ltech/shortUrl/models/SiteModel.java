@@ -14,7 +14,7 @@ import com.google.zxing.WriterException;
 import com.google.zxing.common.BitMatrix;
 import com.google.zxing.qrcode.QRCodeWriter;
 import com.google.zxing.qrcode.decoder.ErrorCorrectionLevel;
-import com.ltech.shortUrl.Dto.SiteDTO;
+import com.ltech.shortUrl.Dto.request.SiteRequestDTO;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -96,7 +96,7 @@ public class SiteModel {
             return null;
         }
     }
-    public SiteModel siteDtoToModel(SiteDTO siteDTO){
+    public SiteModel siteDtoToModel(SiteRequestDTO siteDTO){
         SiteModel siteModel = new SiteModel(siteDTO.getUrlOriginal());
         return siteModel;
     }
